@@ -25,14 +25,14 @@ export async function createGuest(guest:Guest ){
 
 export async function getRooms(){
 const record = await pb.collection('rooms').getFullList(50 /* batch size */, {
-    sort: 'number',
+    sort: 'number', expand: "guest"
 });
 return record
 }
 
 export async function getGuests(){
     const record = await pb.collection('guests').getFullList(50 /* batch size */, {
-        sort: '-created',
+        sort: '-created'
     });
     return record
 }
@@ -49,6 +49,11 @@ export async function checkIn(gId:string, id:string ){
         const guest = await pb.collection("guests").getOne(gId)
         if(!guest) {
             return toast.error("Guest does not exists")
+        }
+
+        const isInRoom = await pb.collection("rooms").getFirstListItem(`guest="${gId}"`)
+        if(isInRoom) {
+            return toast.error("Guest has already check in Room #"+isInRoom.number)
         }
 
         await pb.collection('check_in').create({
@@ -81,6 +86,11 @@ export async function checkOut(gId:string, id:string ){
         const guest = await pb.collection("guests").getOne(gId)
         if(!guest) {
             return toast.error("Guest does not exists")
+        }
+
+        const isInRoom = await pb.collection("rooms").getFirstListItem(`guest="${gId}"`)
+        if(!isInRoom) {
+            return toast.error("Guest is not checked in any room")
         }
 
         await pb.collection('check_out').create({

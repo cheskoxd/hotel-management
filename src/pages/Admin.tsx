@@ -31,15 +31,16 @@ export default function Admmin() {
       await pb.collection('rooms').subscribe('*', function (e) {
         console.log(e.action);
         console.log(e.record);
-
-        rooms.forEach((room:any) => {
+        let temp = [...rooms] 
+        temp.forEach((room:any) => {
           if(room.id == e.record.id){
             room.occupied = e.record.occupied
             room.guest = e.record.guest
           }
         })
+        setRooms(temp)
         
-    })}
+    }, {expand: "guest"})}
 
     start()
     return () => {

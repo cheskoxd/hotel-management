@@ -1,6 +1,14 @@
 import { IRoomsAndGuests } from '@/lib/data'
 // import { useEffect } from 'react'
-
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Label } from '@/components/ui/label'
+import { Badge } from "@/components/ui/badge"
 
 
 
@@ -36,9 +44,13 @@ export default function RoomAvailability({rooms}:IRoomsAndGuests) {
       </Table> */}
 
 
-      <div className="grid grid-cols-8 gap-2">
+      <div className="grid grid-cols-4 gap-2 md:grid-cols-8">
       {rooms.map(room => ( 
-        <button key={room.id} className={`flex items-center justify-center w-20 aspect-square border-b py-2 ${room.occupied ? 'bg-red-400' : 'bg-green-400'}`}>
+       
+
+<Dialog>
+<DialogTrigger asChild>
+<button key={room.id} className={`flex items-center justify-center w-20 aspect-square border-b py-2 ${room.occupied ? 'bg-red-400' : 'bg-green-400'}`}>
             <p className="text-lg font-semibold">{room.number}</p>
           
           {/* <div>
@@ -49,6 +61,25 @@ export default function RoomAvailability({rooms}:IRoomsAndGuests) {
             </p>
           </div> */}
         </button>
+</DialogTrigger>
+<DialogContent className="sm:max-w-[425px]">
+  <DialogHeader>
+    <DialogTitle>Room {room.number} <Badge className={room.occupied ? "bg-red-400" : "bg-green-400"} variant="outline">{room.occupied ? "Occupied" : "Available"}</Badge></DialogTitle>
+  </DialogHeader>
+ {room.occupied && <div className="grid gap-4 py-4">
+    <div className="grid items-center grid-cols-4 gap-4">
+      <Label htmlFor="name" className="text-right">
+        Guest
+      </Label>
+      <span
+        id="name"
+        
+        className="col-span-3"
+      >{room.expand.guest.name}</span>
+    </div>
+  </div>}
+</DialogContent>
+</Dialog>
         ))}
       </div>
     </div>

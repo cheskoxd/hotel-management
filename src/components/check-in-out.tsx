@@ -34,7 +34,7 @@ export default function CheckInOut({ onRefresh, rooms, guests }: CheckInOut) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold">Check-in / Check-out</h2>
-      <div className="flex space-x-4">
+      <div className="flex flex-col items-center space-x-4 md:flex-row">
         <Select value={selectedGuest} onValueChange={setSelectedGuest}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Select guest" />
