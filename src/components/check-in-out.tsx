@@ -51,8 +51,8 @@ export default function CheckInOut({ onRefresh, rooms, guests }: CheckInOut) {
           </SelectTrigger>
           <SelectContent>
             {rooms.map(room => (
-              <SelectItem key={room.id} value={room.id}>
-                {room.number}
+              <SelectItem className='w-full' key={room.id} value={room.id}>
+                <span className='flex gap-4 justify-between items-center'>{room.number} {room.occupied && <div className='w-[8px] h-[8px] rounded-full aspect-square bg-red-600'></div>}</span>
               </SelectItem>
             ))}
           </SelectContent>

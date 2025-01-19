@@ -101,6 +101,10 @@ export async function checkOut(gId:string, id:string ){
             return toast.error("Guest is not checked in any room")
         }
 
+        if(isInRoom.items[0].id != id){
+            return toast.error("Guest is not checked in this room")
+        }
+
         await pb.collection('check_out').create({
             guests: gId,
             room: id,
