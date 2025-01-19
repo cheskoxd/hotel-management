@@ -43,17 +43,22 @@ export async function checkIn(gId:string, id:string ){
     const i =  toast.loading("Checking in...")
     try {
         const room = await pb.collection("rooms").getOne(id)
+        console.log("Rooms")
         if(room.occupied){
             return toast.error("This room is already occupied")
         }
         const guest = await pb.collection("guests").getOne(gId)
+        console.log("Guests")
+
         if(!guest) {
             return toast.error("Guest does not exists")
         }
 
-        const isInRoom = await pb.collection("rooms").getFirstListItem(`guest="${gId}"`)
-        if(isInRoom) {
-            return toast.error("Guest has already check in Room #"+isInRoom.number)
+        const isInRoom = await pb.collection("rooms").getList(1,1, {filter: `guest="${gId}"`, skipTotal: true})
+        console.log("isInRoom")
+
+        if(isInRoom.items.length != 0) {
+            return toast.error("Guest has already check in Room #"+isInRoom.items[0].number)
         }
 
         await pb.collection('check_in').create({
@@ -61,11 +66,14 @@ export async function checkIn(gId:string, id:string ){
             room: id,
             checkInDate: new Date().toISOString(),
         })
+        console.log("checin")
         
         await pb.collection("rooms").update(id, {
             guest: gId,
             occupied: true,
         })
+        console.log("room occupied")
+
         toast.success("Checked in on room " + room.number +  "!")
         return
     } catch (error:any) {
@@ -88,8 +96,8 @@ export async function checkOut(gId:string, id:string ){
             return toast.error("Guest does not exists")
         }
 
-        const isInRoom = await pb.collection("rooms").getFirstListItem(`guest="${gId}"`)
-        if(!isInRoom) {
+        const isInRoom = await pb.collection("rooms").getList(1,1,{filter: `guest="${gId}"`})
+        if(isInRoom.items.length == 0) {
             return toast.error("Guest is not checked in any room")
         }
 

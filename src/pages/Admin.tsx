@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CheckInOut from '@/components/check-in-out'
 import CreateGuest from '@/components/create-guest'
@@ -11,9 +11,16 @@ export default function Admmin() {
   const [guests, setGuests] = useState<any>([])
   const [rooms, setRooms] = useState<any>([])
 
+  const roomsRef = useRef(rooms);
+
+  useEffect(() => {
+    roomsRef.current = rooms;
+  }, [rooms]);
+
+
   async function getData(){
-    let r = await getRooms()
     let g = await getGuests()
+    let r = await getRooms()
     setGuests(g)
     setRooms(r)
     console.log(r)
@@ -31,14 +38,15 @@ export default function Admmin() {
       await pb.collection('rooms').subscribe('*', function (e) {
         console.log(e.action);
         console.log(e.record);
-        let temp = [...rooms] 
-        temp.forEach((room:any) => {
-          if(room.id == e.record.id){
-            room.occupied = e.record.occupied
-            room.guest = e.record.guest
-          }
-        })
-        setRooms(temp)
+        if(e.action !== "update") return
+        const updatedRooms = roomsRef.current.map((room: any) =>
+          room.id === e.record.id ? { ...room, ...e.record } : room
+        );
+
+        console.log("*---------------------")
+        console.log(updatedRooms)
+        console.log(rooms)
+        setRooms(updatedRooms)
         
     }, {expand: "guest"})}
 
