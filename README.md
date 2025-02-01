@@ -1,4 +1,4 @@
-# Manual de Usuario - Sistema de Gestión de Hotel
+# Manual de Usuario
 
 ## Navegacion
 - Para [Usuarios](#introducción)
