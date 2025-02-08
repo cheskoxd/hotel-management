@@ -14,6 +14,7 @@ import { checkIn, checkOut } from '@/db/db'
 import { useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { Button } from './ui/button'
+import { BedSingle } from 'lucide-react'
 
 
 
@@ -42,14 +43,15 @@ export default function RoomAvailability({ rooms, guests }: IRoomsAndGuests) {
     <div className="space-y-4 ">
       <h2 className="text-2xl font-semibold">Disponibilidad de Habitaciones</h2>
 
-      <div className="grid grid-cols-4 gap-2 md:grid-cols-8">
+      <div className="grid grid-cols-4 gap-x-2 gap-y-2 md:grid-cols-8">
         {rooms.map(room => (
 
 
           <Dialog key={room.id}>
             <DialogTrigger asChild>
-              <button className={`flex items-center justify-center w-20 aspect-square border-b py-2 ${room.guest ? 'bg-red-400' : 'bg-green-400'}`}>
+              <button className={`flex items-center flex-col rounded-md justify-center w-20 aspect-square border-b py-2 ${room.guest ? 'bg-red-400' : 'bg-green-400'}`}>
                 <span className="text-lg font-semibold">{room.number}</span>
+                <BedSingle />
               </button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]" aria-describedby='room'>
