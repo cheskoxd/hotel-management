@@ -18,7 +18,7 @@ import { BedSingle } from 'lucide-react'
 
 
 
-export default function RoomAvailability({ rooms, guests }: IRoomsAndGuests) {
+export default function RoomAvailability({ rooms, guests, get }: IRoomsAndGuests) {
   const [selectedGuest, setSelectedGuest] = useState('')
   
     const handleCheckIn = async (room:string) => {
@@ -27,6 +27,8 @@ export default function RoomAvailability({ rooms, guests }: IRoomsAndGuests) {
         // onRefresh()
         // await get()
         setSelectedGuest('')
+        await get()
+
       }
     }
   
@@ -34,8 +36,8 @@ export default function RoomAvailability({ rooms, guests }: IRoomsAndGuests) {
         await checkOut(guest, room)
         // onRefresh()
         setSelectedGuest('')
-
-        // await get()
+        
+        await get()
     }
 
 
