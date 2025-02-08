@@ -86,7 +86,7 @@ export default function RoomAvailability({ rooms, guests }: IRoomsAndGuests) {
                     ))}
                   </SelectContent>
                 </Select>
-                <Button onClick={() => handleCheckIn(room.id)}>Hospedar</Button>
+                <Button disabled={!selectedGuest} onClick={() => handleCheckIn(room.id)}>Hospedar</Button>
                 
                 </div>
               </div> 
