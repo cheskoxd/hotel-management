@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import CheckInOut from '@/components/check-in-out'
 import CreateGuest from '@/components/create-guest'
 import RoomAvailability from '@/components/room-availability'
 import { getGuests, getRooms, pb } from '@/db/db'
@@ -63,16 +62,16 @@ export default function Admmin() {
   position="bottom-center"
 
 />
-      <h1 className="mb-6 text-3xl font-bold ">Hotel Management System</h1>
-      <Tabs defaultValue="check-in-out">
+      <h1 className="mb-6 text-3xl font-bold ">Sistema de Hotel</h1>
+      <Tabs defaultValue="room-availability">
         <TabsList className='mb-4'>
-          <TabsTrigger value="create-guest">Create Guest</TabsTrigger>
-          <TabsTrigger value="check-in-out">Check-in/Check-out</TabsTrigger>
-          <TabsTrigger value="room-availability">Room Availability</TabsTrigger>
+          <TabsTrigger value="create-guest">Huespedes</TabsTrigger>
+          {/* <TabsTrigger value="check-in-out">Check-in/Check-out</TabsTrigger> */}
+          <TabsTrigger value="room-availability">Habitaciones</TabsTrigger>
         </TabsList>
-        <TabsContent value="check-in-out">
+        {/* <TabsContent value="check-in-out">
           <CheckInOut onRefresh={handleRefresh} guests={guests} rooms={rooms} get={getData} />
-        </TabsContent>
+        </TabsContent> */}
         <TabsContent value="create-guest">
           <CreateGuest onRefresh={handleRefresh} get={getData}/>
         </TabsContent>

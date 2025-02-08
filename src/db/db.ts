@@ -45,20 +45,20 @@ export async function checkIn(gId:string, id:string ){
         const room = await pb.collection("rooms").getOne(id)
         console.log("Rooms")
         if(room.guest){
-            return toast.error("This room is already occupied")
+            return toast.error("Este cuarto no esta disponible")
         }
         const guest = await pb.collection("guests").getOne(gId)
         console.log("Guests")
 
         if(!guest) {
-            return toast.error("Guest does not exists")
+            return toast.error("Huesped no existe")
         }
 
         const isInRoom = await pb.collection("rooms").getList(1,1, {filter: `guest="${gId}"`, skipTotal: true})
         console.log("isInRoom")
 
         if(isInRoom.items.length != 0) {
-            return toast.error("Guest has already check in Room #"+isInRoom.items[0].number)
+            return toast.error("Huesped ya hospedado en habitacion #"+isInRoom.items[0].number)
         }
 
         await pb.collection('check_in').create({
@@ -73,7 +73,7 @@ export async function checkIn(gId:string, id:string ){
         })
         console.log("room occupied")
 
-        toast.success("Checked in on room " + room.number +  "!")
+        toast.success("Hospedado huesped en cuarto #" + room.number +  "!")
         return
     } catch (error:any) {
         toast.error(error)
@@ -88,20 +88,20 @@ export async function checkOut(gId:string, id:string ){
     try {
         const room = await pb.collection("rooms").getOne(id)
         if(!room.guest){
-            return toast.error("This room is not occupied")
+            return toast.error("Este cuarto no esta disponible")
         }
         const guest = await pb.collection("guests").getOne(gId)
         if(!guest) {
-            return toast.error("Guest does not exists")
+            return toast.error("Huesped no existe")
         }
 
         const isInRoom = await pb.collection("rooms").getList(1,1,{filter: `guest="${gId}"`})
         if(isInRoom.items.length == 0) {
-            return toast.error("Guest is not checked in any room")
+            return toast.error("Huesped no esta hospedado en ningun cuarto")
         }
 
         if(isInRoom.items[0].id != id){
-            return toast.error("Guest is not checked in this room")
+            return toast.error("Huesped no esta hospedado en este cuarto")
         }
 
         await pb.collection('check_out').create({
@@ -111,9 +111,9 @@ export async function checkOut(gId:string, id:string ){
         })
         
         await pb.collection("rooms").update(id, {
-            guest: gId,
+            guest: null,
         })
-        toast.success("Checked out of room " + room.number +  "!")
+        toast.success("Habitacion #" + room.number +  " desalojada!")
         return
     } catch (error:any) {
         toast.error(error)

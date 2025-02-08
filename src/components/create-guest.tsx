@@ -25,10 +25,10 @@ export default function CreateGuest({ onRefresh, get }: cGuest) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-semibold">Create Guest</h2>
+      <h2 className="text-2xl font-semibold">Crear Huesped</h2>
       <div className="flex space-x-4">
         <Input
-          placeholder="Guest name"
+          placeholder="Nombre"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -37,7 +37,7 @@ export default function CreateGuest({ onRefresh, get }: cGuest) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         /> */}
-        <Button onClick={handleCreateGuest}>Create Guest</Button>
+        <Button onClick={handleCreateGuest}>Crear</Button>
       </div>
     </div>
   )
