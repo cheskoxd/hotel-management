@@ -27,7 +27,7 @@ export default function RoomAvailability({ rooms, guests, get }: IRoomsAndGuests
         // onRefresh()
         // await get()
         setSelectedGuest('')
-        await get()
+        get()
 
       }
     }
@@ -37,7 +37,7 @@ export default function RoomAvailability({ rooms, guests, get }: IRoomsAndGuests
         // onRefresh()
         setSelectedGuest('')
         
-        await get()
+        get()
     }
 
 
