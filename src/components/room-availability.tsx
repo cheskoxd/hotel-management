@@ -43,7 +43,7 @@ export default function RoomAvailability({ rooms, guests }: IRoomsAndGuests) {
     <div className="space-y-4 ">
       <h2 className="text-2xl font-semibold">Disponibilidad de Habitaciones</h2>
 
-      <div className="grid grid-cols-4 gap-x-2 gap-y-2 md:grid-cols-8">
+      <div className="grid grid-cols-3 gap-x-2 gap-y-2 md:grid-cols-8">
         {rooms.map(room => (
 
 
