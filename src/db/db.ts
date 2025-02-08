@@ -40,7 +40,7 @@ export async function getGuests(){
 
 
 export async function checkIn(gId:string, id:string ){
-    const i =  toast.loading("Checking in...")
+    const i =  toast.loading("Verificando...")
     try {
         const room = await pb.collection("rooms").getOne(id)
         console.log("Rooms")
@@ -84,7 +84,7 @@ export async function checkIn(gId:string, id:string ){
 } 
 
 export async function checkOut(gId:string, id:string ){
-    const i =  toast.loading("Checking Out...")
+    const i =  toast.loading("Desalojando...")
     try {
         const room = await pb.collection("rooms").getOne(id)
         if(!room.guest){
