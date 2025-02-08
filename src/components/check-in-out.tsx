@@ -52,7 +52,7 @@ export default function CheckInOut({ onRefresh, rooms, guests }: CheckInOut) {
           <SelectContent>
             {rooms.map(room => (
               <SelectItem className='w-full' key={room.id} value={room.id}>
-                <span className='flex gap-4 justify-between items-center'>{room.number} {room.occupied && <div className='w-[8px] h-[8px] rounded-full aspect-square bg-red-600'></div>}</span>
+                <span className='flex items-center justify-between gap-4'>{room.number} {room.guest && <div className='w-[8px] h-[8px] rounded-full aspect-square bg-red-600'></div>}</span>
               </SelectItem>
             ))}
           </SelectContent>

@@ -25,15 +25,15 @@ export default function RoomAvailability({rooms}:IRoomsAndGuests) {
 
 <Dialog key={room.id}>
 <DialogTrigger asChild>
-<button  className={`flex items-center justify-center w-20 aspect-square border-b py-2 ${room.occupied ? 'bg-red-400' : 'bg-green-400'}`}>
+<button  className={`flex items-center justify-center w-20 aspect-square border-b py-2 ${room.guest ? 'bg-red-400' : 'bg-green-400'}`}>
             <p className="text-lg font-semibold">{room.number}</p>
         </button>
 </DialogTrigger>
 <DialogContent className="sm:max-w-[425px]">
   <DialogHeader>
-    <DialogTitle>Room {room.number} <Badge className={room.occupied ? "bg-red-400" : "bg-green-400"} variant="outline">{room.occupied ? "Occupied" : "Available"}</Badge></DialogTitle>
+    <DialogTitle>Room {room.number} <Badge className={room.guest ? "bg-red-400" : "bg-green-400"} variant="outline">{room.guest ? "Occupied" : "Available"}</Badge></DialogTitle>
   </DialogHeader>
- {room.occupied && <div className="grid gap-4 py-4">
+ {room.guest && <div className="grid gap-4 py-4">
     <div className="grid items-center grid-cols-4 gap-4">
       <Label htmlFor="name" className="text-right">
         Guest

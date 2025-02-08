@@ -44,7 +44,7 @@ export async function checkIn(gId:string, id:string ){
     try {
         const room = await pb.collection("rooms").getOne(id)
         console.log("Rooms")
-        if(room.occupied){
+        if(room.guest){
             return toast.error("This room is already occupied")
         }
         const guest = await pb.collection("guests").getOne(gId)
@@ -70,7 +70,6 @@ export async function checkIn(gId:string, id:string ){
         
         await pb.collection("rooms").update(id, {
             guest: gId,
-            occupied: true,
         })
         console.log("room occupied")
 
@@ -88,7 +87,7 @@ export async function checkOut(gId:string, id:string ){
     const i =  toast.loading("Checking Out...")
     try {
         const room = await pb.collection("rooms").getOne(id)
-        if(!room.occupied){
+        if(!room.guest){
             return toast.error("This room is not occupied")
         }
         const guest = await pb.collection("guests").getOne(gId)
@@ -113,7 +112,6 @@ export async function checkOut(gId:string, id:string ){
         
         await pb.collection("rooms").update(id, {
             guest: gId,
-            occupied: false,
         })
         toast.success("Checked out of room " + room.number +  "!")
         return
