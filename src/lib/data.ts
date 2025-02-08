@@ -7,7 +7,6 @@ export interface IGuest {
 export interface IRoom {
   id: string;
   number: string;
-  occupied: boolean;
   guest:string;
   expand: any;
 }
